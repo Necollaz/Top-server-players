@@ -29,7 +29,7 @@ public class Player
 public class Server
 {
     private List<Player> _players;
-    private string _messageTopPlayers = "Топ 3";
+    private int _topPlayers = 3;
 
     public Server()
     {
@@ -94,19 +94,19 @@ public class Server
     {
         List<Player> topPlayersByLevel = _players.OrderByDescending(player => player.Level).Take(3).ToList();
 
-        PrintTopPlayers("по уровню", topPlayersByLevel);
+        ShowTopPlayers("по уровню", topPlayersByLevel);
     }
 
     private void FilteredPlayersByStrenght()
     {
         List<Player> topPlayersByStrength = _players.OrderByDescending(player => player.Strenght).Take(3).ToList();
 
-        PrintTopPlayers("по силе", topPlayersByStrength);
+        ShowTopPlayers("по силе", topPlayersByStrength);
     }
 
-    private void PrintTopPlayers(string criteria, IEnumerable<Player> players)
+    private void ShowTopPlayers(string criteria, IEnumerable<Player> players)
     {
-        Console.WriteLine($"{_messageTopPlayers} игроков {criteria}: ");
+        Console.WriteLine($"Топ {_topPlayers} игроков {criteria}: ");
 
         foreach (var player in players)
         {
