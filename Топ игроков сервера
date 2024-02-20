@@ -1,0 +1,115 @@
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        Server server = new Server();
+        server.ShowTable();
+    }
+}
+
+public class Player
+{
+    public Player(string name, int level, int strenght)
+    {
+        Name = name;
+        Level = level;
+        Strenght = strenght;
+    }
+
+    public string Name { get; private set; }
+    public int Level { get; private set; }
+    public int Strenght { get; private set; }
+
+    public void ShowInfo()
+    {
+        Console.WriteLine($"Игрок - {Name}, уровень - {Level}, сила - {Strenght}.");
+    }
+}
+
+public class Server
+{
+    private List<Player> _players;
+
+    public Server()
+    {
+        _players = new List<Player>
+        {
+            new Player("Nickname1", 10, 25),
+            new Player("Nickname2", 15, 30),
+            new Player("Nickname3", 24, 35),
+            new Player("Nickname4", 6, 10),
+            new Player("Nickname5", 53, 56),
+            new Player("Nickname6", 32, 41),
+            new Player("Nickname7", 41, 49),
+            new Player("Nickname8", 66, 75),
+            new Player("Nickname9", 17, 36),
+            new Player("Nickname10", 19, 39)
+        };
+    }
+
+    private void FilteredPlayersByLevel()
+    {
+        _players = _players.OrderByDescending(player => player.Level).Take(3).ToList();
+
+        Console.WriteLine("Топ 3 игроков по уровню: ");
+
+        foreach (var player in _players)
+        {
+            player.ShowInfo();
+        }
+    }
+
+    private void FilteredPlayersByStrenght()
+    {
+        _players = _players.OrderByDescending(player => player.Strenght).Take(3).ToList();
+
+        Console.WriteLine("Топ 3 игроков по силе: ");
+
+        foreach (var player in _players)
+        {
+            player.ShowInfo();
+        }
+    }
+
+    public void ShowTable()
+    {
+        const string CommandShowTopPlayersByLevel = "1";
+        const string CommandShowTopPlayersByStrenght = "2";
+        const string CommandExit = "3";
+
+        bool isWork = true;
+
+        while (isWork)
+        {
+            Console.WriteLine("выберите пункт меню: ");
+            Console.WriteLine($"{CommandShowTopPlayersByLevel} - Топ-3 игроков по уровню.");
+            Console.WriteLine($"{CommandShowTopPlayersByStrenght} - Топ-3 игроков по силе.");
+            Console.WriteLine($"{CommandExit} - Выйти из меню.");
+            string userInput = Console.ReadLine();
+
+            switch (userInput)
+            {
+                case CommandShowTopPlayersByLevel:
+                    FilteredPlayersByLevel();
+                    break;
+
+                case CommandShowTopPlayersByStrenght:
+                    FilteredPlayersByStrenght();
+                    break;
+
+                case CommandExit:
+                    Console.WriteLine("Вы вышли из меню.");
+                    isWork = false;
+                    break;
+
+                default:
+                    Console.WriteLine("Такой команды нет.");
+                    break;
+            }
+
+            Console.WriteLine("Нажмите любую клавишу чтобы продолжить.");
+            Console.ReadKey();
+            Console.Clear();
+        }
+    }
+}
