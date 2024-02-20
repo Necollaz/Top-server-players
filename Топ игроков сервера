@@ -29,6 +29,7 @@ public class Player
 public class Server
 {
     private List<Player> _players;
+    private string _messageTopPlayers = "Топ 3";
 
     public Server()
     {
@@ -45,30 +46,6 @@ public class Server
             new Player("Nickname9", 17, 36),
             new Player("Nickname10", 19, 39)
         };
-    }
-
-    private void FilteredPlayersByLevel()
-    {
-        _players = _players.OrderByDescending(player => player.Level).Take(3).ToList();
-
-        Console.WriteLine("Топ 3 игроков по уровню: ");
-
-        foreach (var player in _players)
-        {
-            player.ShowInfo();
-        }
-    }
-
-    private void FilteredPlayersByStrenght()
-    {
-        _players = _players.OrderByDescending(player => player.Strenght).Take(3).ToList();
-
-        Console.WriteLine("Топ 3 игроков по силе: ");
-
-        foreach (var player in _players)
-        {
-            player.ShowInfo();
-        }
     }
 
     public void ShowTable()
@@ -110,6 +87,30 @@ public class Server
             Console.WriteLine("Нажмите любую клавишу чтобы продолжить.");
             Console.ReadKey();
             Console.Clear();
+        }
+    }
+
+    private void FilteredPlayersByLevel()
+    {
+        List<Player> topPlayersByLevel = _players.OrderByDescending(player => player.Level).Take(3).ToList();
+
+        PrintTopPlayers("по уровню", topPlayersByLevel);
+    }
+
+    private void FilteredPlayersByStrenght()
+    {
+        List<Player> topPlayersByStrength = _players.OrderByDescending(player => player.Strenght).Take(3).ToList();
+
+        PrintTopPlayers("по силе", topPlayersByStrength);
+    }
+
+    private void PrintTopPlayers(string criteria, IEnumerable<Player> players)
+    {
+        Console.WriteLine($"{_messageTopPlayers} игроков {criteria}: ");
+
+        foreach (var player in players)
+        {
+            player.ShowInfo();
         }
     }
 }
