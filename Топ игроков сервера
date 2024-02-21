@@ -92,14 +92,14 @@ public class Server
 
     private void FilteredPlayersByLevel()
     {
-        List<Player> topPlayersByLevel = _players.OrderByDescending(player => player.Level).Take(3).ToList();
+        List<Player> topPlayersByLevel = _players.OrderByDescending(player => player.Level).Take(_topPlayers).ToList();
 
         ShowTopPlayers("по уровню", topPlayersByLevel);
     }
 
     private void FilteredPlayersByStrenght()
     {
-        List<Player> topPlayersByStrength = _players.OrderByDescending(player => player.Strenght).Take(3).ToList();
+        List<Player> topPlayersByStrength = _players.OrderByDescending(player => player.Strenght).Take(_topPlayers).ToList();
 
         ShowTopPlayers("по силе", topPlayersByStrength);
     }
